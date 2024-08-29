@@ -1,3 +1,7 @@
 <resources>
-    <string name="app_name">Hello World</string>
+    <string name="app_name">Shake and Rotate Game App</string>
+    <string name="instruction_text">Shake the phone to start the game!</string>
+    <string name="button_text">Click Me</string>
+    <string name="rotating_image_description">Rotating image</string>
+    <string name="score_text">Score: %1$d</string>
 </resources>

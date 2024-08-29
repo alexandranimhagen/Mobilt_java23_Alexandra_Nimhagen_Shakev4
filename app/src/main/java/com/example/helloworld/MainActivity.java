@@ -1,54 +1,164 @@
 package com.example.helloworld;
 
+import android.content.Context;
 import android.graphics.Color;
+import android.hardware.Sensor;
+import android.hardware.SensorEvent;
+import android.hardware.SensorEventListener;
+import android.hardware.SensorManager;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
-
-import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.constraintlayout.widget.ConstraintLayout;
-import androidx.core.graphics.Insets;
-import androidx.core.view.ViewCompat;
-import androidx.core.view.WindowInsetsCompat;
 
 public class MainActivity extends AppCompatActivity {
+
+    private SensorManager sensorManager;
+    private Sensor accelerometer;
+    private Sensor gyroscope;
+    private Sensor lightSensor;
+    private SensorEventListener sensorEventListener;
+    private boolean gameStarted = false;
+    private long lastShakeTime = 0;
+    private int score = 0; // Poängräknare
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        EdgeToEdge.enable(this);
         setContentView(R.layout.activity_main);
-        ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main), (v, insets) -> {
-            Insets systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars());
-            v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
 
-            ConstraintLayout cl = findViewById(R.id.main);
-            TextView tv = findViewById(R.id.label);
-            tv.setText("Jag heter Alex!");
-            tv.setTextSize(26);
+        // Initialize sensors
+        sensorManager = (SensorManager) getSystemService(Context.SENSOR_SERVICE);
+        accelerometer = sensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER);
+        gyroscope = sensorManager.getDefaultSensor(Sensor.TYPE_GYROSCOPE);
+        lightSensor = sensorManager.getDefaultSensor(Sensor.TYPE_LIGHT);
 
-            Button b = findViewById(R.id.b);
-            Button b2 = new Button (MainActivity.this);
-            cl.addView(b2);
-
-            b.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    Log.i("Alex", "Click");
+        // Define the sensor event listener
+        sensorEventListener = new SensorEventListener() {
+            @Override
+            public void onSensorChanged(SensorEvent event) {
+                if (event.sensor.getType() == Sensor.TYPE_ACCELEROMETER) {
+                    handleShakeEvent(event);
+                } else if (event.sensor.getType() == Sensor.TYPE_GYROSCOPE) {
+                    handleGyroscopeEvent(event);
+                } else if (event.sensor.getType() == Sensor.TYPE_LIGHT) {
+                    handleLightSensorEvent(event);
                 }
-            });
+            }
 
-            b.setBackgroundColor(Color.rgb(21,96, 83));
-            String text = "Hello World?";
-            Log.println(Log.DEBUG,"Alex'","Hello World!");
-            Toast.makeText(MainActivity.this, "Hello World", Toast.LENGTH_SHORT).show();
+            @Override
+            public void onAccuracyChanged(Sensor sensor, int accuracy) {
+                // Not used in this app
+            }
+        };
+
+        // Register sensor listeners only if sensors are available
+        if (accelerometer != null) {
+            sensorManager.registerListener(sensorEventListener, accelerometer, SensorManager.SENSOR_DELAY_NORMAL);
+        } else {
+            Log.e("SensorError", "Accelerometer not available.");
+        }
+
+        if (gyroscope != null) {
+            sensorManager.registerListener(sensorEventListener, gyroscope, SensorManager.SENSOR_DELAY_NORMAL);
+        } else {
+            Log.e("SensorError", "Gyroscope not available.");
+        }
+
+        if (lightSensor != null) {
+            sensorManager.registerListener(sensorEventListener, lightSensor, SensorManager.SENSOR_DELAY_NORMAL);
+        } else {
+            Log.e("SensorError", "Light sensor not available.");
+        }
+    }
+
+    private void handleShakeEvent(SensorEvent event) {
+        float x = event.values[0];
+        float y = event.values[1];
+        float z = event.values[2];
+
+        Log.d("SensorData", "Accelerometer: x=" + x + ", y=" + y + ", z=" + z);
+
+        // Beräkna accelerationsmängden
+        float accelerationMagnitude = (float) Math.sqrt(x * x + y * y + z * z);
+        Log.d("SensorData", "Acceleration Magnitude: " + accelerationMagnitude);
+
+        Button myButton = findViewById(R.id.myButton);
+
+        float shakeThreshold = 12.0f; // Sätt ett rimligt tröskelvärde
+        if (accelerationMagnitude > shakeThreshold) {
+            long currentTime = System.currentTimeMillis();
+            if (currentTime - lastShakeTime > 1000) {
+                lastShakeTime = currentTime;
+                if (!gameStarted) {
+                    Log.d("Game", "Starting game!");
+                    startGame();
+                } else {
+                    Log.d("Game", "Shake detected, increasing score");
+                    score++; // Öka poängen när en skakning upptäcks
+                    updateScore(); // Uppdatera poängvisningen
+                }
+            }
+        }
+
+        // Ändra färg på knappen beroende på accelerometerdata
+        if (x > 5) {
+            myButton.setBackgroundColor(Color.RED);
+        } else {
+            myButton.setBackgroundColor(Color.GREEN);
+        }
+    }
+
+    private void updateScore() {
+        TextView scoreText = findViewById(R.id.scoreText);
+        String scoreString = getString(R.string.score_text, score);
+        scoreText.setText(scoreString);
+        Log.d("Game", "Current score: " + score);
+    }
 
 
-            return insets;
-        });
+    private void handleGyroscopeEvent(SensorEvent event) {
+        float rotationRate = event.values[2]; // Använd rotation runt z-axeln
+        ImageView rotatingImage = findViewById(R.id.rotatingImage);
+        float currentRotation = rotatingImage.getRotation();
+        rotatingImage.setRotation(currentRotation + rotationRate * 10);
+    }
+
+    private void handleLightSensorEvent(SensorEvent event) {
+        float lightLevel = event.values[0];
+        // Ändra layoutens bakgrund baserat på ljusnivån
+        View layout = findViewById(R.id.mainLayout);
+        if (lightLevel < 10) {
+            layout.setBackgroundColor(Color.BLACK);
+        } else {
+            layout.setBackgroundColor(Color.WHITE);
+        }
+    }
+
+    // Start the game when a shake is detected
+    private void startGame() {
+        gameStarted = true;
+        score = 0; // Nollställ poängen när spelet startar
+        Toast.makeText(this, "Game started!", Toast.LENGTH_SHORT).show();
+        Log.d("Game", "Game started!");
+        updateScore(); // Visa poängen när spelet startar
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        sensorManager.registerListener(sensorEventListener, accelerometer, SensorManager.SENSOR_DELAY_UI);
+        sensorManager.registerListener(sensorEventListener, gyroscope, SensorManager.SENSOR_DELAY_UI);
+        sensorManager.registerListener(sensorEventListener, lightSensor, SensorManager.SENSOR_DELAY_UI);
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        sensorManager.unregisterListener(sensorEventListener);
     }
 }
