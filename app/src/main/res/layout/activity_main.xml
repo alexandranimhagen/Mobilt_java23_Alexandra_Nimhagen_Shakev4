@@ -1,52 +1,224 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/mainLayout"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:padding="@dimen/padding">
 
-    <!-- Instruktioner för att starta spelet -->
+    <!-- Speltitel -->
     <TextView
-        android:id="@+id/instructionText"
+        android:id="@+id/gameTitle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/instruction_text"
-        android:textSize="18sp"
+        android:text="@string/game_title"
+        android:textSize="@dimen/gameTitle_text_size"
+        android:textColor="@color/white"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="20dp" />
+        android:textStyle="bold"
+        android:layout_marginTop="@dimen/gameTitle_margin_top" />
 
-    <!-- Accelerometer data TextView -->
+    <!-- Instruktioner rubrik -->
     <TextView
-        android:id="@+id/accelerometerData"
+        android:id="@+id/instructionsHeader"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Accelerometer: x=0.0, y=0.0, z=0.0"
-        android:textSize="16sp"
-        android:layout_below="@id/instructionText"
+        android:text="@string/instructions_header"
+        android:textSize="@dimen/instructionsHeader_text_size"
+        android:textColor="@color/white"
+        android:layout_below="@id/gameTitle"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="20dp" />
+        android:layout_marginTop="@dimen/instructionsHeader_margin_top"
+        android:textStyle="bold" />
 
-    <!-- Gyroscope data TextView -->
+    <!-- Instruktioner text -->
     <TextView
-        android:id="@+id/gyroscopeData"
+        android:id="@+id/gameInstructions"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Gyroscope: x=0.0, y=0.0, z=0.0"
-        android:textSize="16sp"
-        android:layout_below="@id/accelerometerData"
+        android:text="@string/game_instructions"
+        android:textSize="@dimen/gameInstructions_text_size"
+        android:textColor="@color/light_gray"
+        android:layout_below="@id/instructionsHeader"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="20dp" />
+        android:layout_marginTop="@dimen/gameInstructions_margin_top"
+        android:gravity="center" />
+
+    <!-- Bild för att visa rotationseffekt -->
+    <ImageView
+        android:id="@+id/rotatingImage"
+        android:layout_width="@dimen/rotatingImage_size"
+        android:layout_height="@dimen/rotatingImage_size"
+        android:src="@drawable/ic_launcher_foreground"
+        android:layout_below="@id/gameInstructions"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="@dimen/rotatingImage_margin_top"
+        android:contentDescription="@string/rotating_image_description" />
+
+    <!-- Accelerometer Header -->
+    <TextView
+        android:id="@+id/accelerometerHeader"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/accelerometer_header"
+        android:textSize="@dimen/accelerometerHeader_text_size"
+        android:textColor="@color/white"
+        android:layout_below="@id/rotatingImage"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="@dimen/accelerometerHeader_margin_top"
+        android:textStyle="bold" />
+
+    <!-- Accelerometer X ProgressBar -->
+    <TextView
+        android:id="@+id/accelerometerXLabel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/x_axis_label"
+        android:textSize="@dimen/axis_label_text_size"
+        android:textColor="@color/gray"
+        android:layout_below="@id/accelerometerHeader"
+        android:layout_alignParentStart="true"
+        android:layout_marginTop="@dimen/axis_label_margin_top" />
+
+    <ProgressBar
+        android:id="@+id/progressBarX"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/accelerometerXLabel"
+        android:layout_marginTop="@dimen/progressBar_margin_top"
+        android:max="@integer/progressBar_max"
+        style="@android:style/Widget.DeviceDefault.Light.ProgressBar.Horizontal" />
+
+    <!-- Accelerometer Y ProgressBar -->
+    <TextView
+        android:id="@+id/accelerometerYLabel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/y_axis_label"
+        android:textSize="@dimen/axis_label_text_size"
+        android:textColor="@color/gray"
+        android:layout_below="@id/progressBarX"
+        android:layout_alignParentStart="true"
+        android:layout_marginTop="@dimen/axis_label_margin_top" />
+
+    <ProgressBar
+        android:id="@+id/progressBarY"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/accelerometerYLabel"
+        android:layout_marginTop="@dimen/progressBar_margin_top"
+        android:max="@integer/progressBar_max"
+        style="@android:style/Widget.DeviceDefault.Light.ProgressBar.Horizontal" />
+
+    <!-- Accelerometer Z ProgressBar -->
+    <TextView
+        android:id="@+id/accelerometerZLabel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/z_axis_label"
+        android:textSize="@dimen/axis_label_text_size"
+        android:textColor="@color/gray"
+        android:layout_below="@id/progressBarY"
+        android:layout_alignParentStart="true"
+        android:layout_marginTop="@dimen/axis_label_margin_top" />
+
+    <ProgressBar
+        android:id="@+id/progressBarZ"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/accelerometerZLabel"
+        android:layout_marginTop="@dimen/progressBar_margin_top"
+        android:max="@integer/progressBar_max"
+        style="@android:style/Widget.DeviceDefault.Light.ProgressBar.Horizontal" />
+
+    <!-- Gyroscope Header -->
+    <TextView
+        android:id="@+id/gyroscopeHeader"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/gyroscope_header"
+        android:textSize="@dimen/gyroscopeHeader_text_size"
+        android:textColor="@color/white"
+        android:layout_below="@id/progressBarZ"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="@dimen/gyroscopeHeader_margin_top"
+        android:textStyle="bold" />
+
+    <!-- Gyroscope X ProgressBar -->
+    <TextView
+        android:id="@+id/gyroscopeXLabel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/x_axis_label"
+        android:textSize="@dimen/axis_label_text_size"
+        android:textColor="@color/gray"
+        android:layout_below="@id/gyroscopeHeader"
+        android:layout_alignParentStart="true"
+        android:layout_marginTop="@dimen/axis_label_margin_top" />
+
+    <ProgressBar
+        android:id="@+id/gyroProgressBarX"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/gyroscopeXLabel"
+        android:layout_marginTop="@dimen/progressBar_margin_top"
+        android:max="@integer/progressBar_max"
+        style="@android:style/Widget.DeviceDefault.Light.ProgressBar.Horizontal" />
+
+    <!-- Gyroscope Y ProgressBar -->
+    <TextView
+        android:id="@+id/gyroscopeYLabel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/y_axis_label"
+        android:textSize="@dimen/axis_label_text_size"
+        android:textColor="@color/gray"
+        android:layout_below="@id/gyroProgressBarX"
+        android:layout_alignParentStart="true"
+        android:layout_marginTop="@dimen/axis_label_margin_top" />
+
+    <ProgressBar
+        android:id="@+id/gyroProgressBarY"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/gyroscopeYLabel"
+        android:layout_marginTop="@dimen/progressBar_margin_top"
+        android:max="@integer/progressBar_max"
+        style="@android:style/Widget.DeviceDefault.Light.ProgressBar.Horizontal" />
+
+    <!-- Gyroscope Z ProgressBar -->
+    <TextView
+        android:id="@+id/gyroscopeZLabel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/z_axis_label"
+        android:textSize="@dimen/axis_label_text_size"
+        android:textColor="@color/gray"
+        android:layout_below="@id/gyroProgressBarY"
+        android:layout_alignParentStart="true"
+        android:layout_marginTop="@dimen/axis_label_margin_top" />
+
+    <ProgressBar
+        android:id="@+id/gyroProgressBarZ"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/gyroscopeZLabel"
+        android:layout_marginTop="@dimen/progressBar_margin_top"
+        android:max="@integer/progressBar_max"
+        style="@android:style/Widget.DeviceDefault.Light.ProgressBar.Horizontal" />
 
     <!-- Score TextView -->
     <TextView
         android:id="@+id/scoreText"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Score: 0"
-        android:textSize="18sp"
-        android:layout_below="@id/gyroscopeData"
+        android:text="@string/score_text"
+        android:textSize="@dimen/scoreText_text_size"
+        android:textColor="@color/white"
+        android:layout_below="@id/gyroProgressBarZ"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="20dp" />
+        android:layout_marginTop="@dimen/scoreText_margin_top"
+        android:textStyle="bold" />
 
-    <!-- Övriga komponenter som Button, ImageView, etc. -->
+    <!-- Button for game actions -->
     <Button
         android:id="@+id/myButton"
         android:layout_width="wrap_content"
@@ -54,16 +226,8 @@
         android:text="@string/button_text"
         android:layout_below="@id/scoreText"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="20dp" />
-
-    <ImageView
-        android:id="@+id/rotatingImage"
-        android:layout_width="100dp"
-        android:layout_height="100dp"
-        android:src="@drawable/ic_launcher_foreground"
-        android:layout_below="@id/myButton"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="20dp"
-        android:contentDescription="@string/rotating_image_description" />
+        android:layout_marginTop="@dimen/button_margin_top"
+        android:backgroundTint="@color/dark_gray"
+        android:textColor="@color/white" />
 
 </RelativeLayout>

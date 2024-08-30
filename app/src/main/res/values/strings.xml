@@ -1,7 +1,7 @@
 <resources>
     <string name="app_name">Shake and Rotate Game App</string>
     <string name="instruction_text">Shake the phone to start the game!</string>
-    <string name="button_text">Click Me</string>
+    <string name="button_text">RESET</string>
     <string name="rotating_image_description">Rotating image</string>
     <string name="score_text">Score: %1$d</string>
     <string name="game_started">Game started!</string>
@@ -10,4 +10,12 @@
     <string name="sensor_error_accelerometer">Accelerometer not available.</string>
     <string name="sensor_error_gyroscope">Gyroscope not available.</string>
     <string name="sensor_error_light">Light sensor not available.</string>
+    <string name="game_instructions">Rotate your phone to change the direction of the object. Press "RESET" to reset the game.</string>
+    <string name="game_title">SHAKE AND ROTATE GAME</string>
+    <string name="instructions_header">Instructions</string>
+    <string name="accelerometer_header">Accelerometer Data</string>
+    <string name="x_axis_label">X-axis:</string>
+    <string name="y_axis_label">Y-axis:</string>
+    <string name="z_axis_label">Z-axis:</string>
+    <string name="gyroscope_header">Gyroscope Data</string>
 </resources>

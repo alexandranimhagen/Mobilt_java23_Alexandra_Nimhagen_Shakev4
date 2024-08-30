@@ -2,4 +2,24 @@
 <resources>
     <integer name="shake_threshold">12</integer>
     <integer name="vibration_duration">500</integer>
+<integer name="padding">16</integer>
+<integer name="gameTitle_text_size">22</integer>
+<integer name="gameTitle_margin_top">30</integer>
+<integer name="instructionsHeader_text_size">18</integer>
+<integer name="instructionsHeader_margin_top">20</integer>
+<integer name="gameInstructions_text_size">16</integer>
+<integer name="gameInstructions_margin_top">10</integer>
+<integer name="rotatingImage_size">100</integer>
+<integer name="rotatingImage_margin_top">20</integer>
+<integer name="accelerometerHeader_text_size">16</integer>
+<integer name="accelerometerHeader_margin_top">20</integer>
+<integer name="axis_label_text_size">14</integer>
+<integer name="axis_label_margin_top">10</integer>
+<integer name="progressBar_margin_top">5</integer>
+<integer name="progressBar_max">20</integer>
+<integer name="gyroscopeHeader_text_size">16</integer>
+<integer name="gyroscopeHeader_margin_top">20</integer>
+<integer name="scoreText_text_size">18</integer>
+<integer name="scoreText_margin_top">20</integer>
+<integer name="button_margin_top">20</integer>
 </resources>
