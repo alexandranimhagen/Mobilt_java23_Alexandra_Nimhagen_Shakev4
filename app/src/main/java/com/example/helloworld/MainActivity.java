@@ -14,6 +14,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
+import java.util.Locale;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -56,23 +57,23 @@ public class MainActivity extends AppCompatActivity {
             }
         };
 
-        // Register sensor listeners only if sensors are available
+        // Register sensor listeners
         if (accelerometer != null) {
             sensorManager.registerListener(sensorEventListener, accelerometer, SensorManager.SENSOR_DELAY_NORMAL);
         } else {
-            Log.e("SensorError", "Accelerometer not available.");
+            Log.e("SensorError", getString(R.string.sensor_error_accelerometer));
         }
 
         if (gyroscope != null) {
             sensorManager.registerListener(sensorEventListener, gyroscope, SensorManager.SENSOR_DELAY_NORMAL);
         } else {
-            Log.e("SensorError", "Gyroscope not available.");
+            Log.e("SensorError", getString(R.string.sensor_error_gyroscope));
         }
 
         if (lightSensor != null) {
             sensorManager.registerListener(sensorEventListener, lightSensor, SensorManager.SENSOR_DELAY_NORMAL);
         } else {
-            Log.e("SensorError", "Light sensor not available.");
+            Log.e("SensorError", getString(R.string.sensor_error_light));
         }
     }
 
@@ -81,15 +82,17 @@ public class MainActivity extends AppCompatActivity {
         float y = event.values[1];
         float z = event.values[2];
 
-        Log.d("SensorData", "Accelerometer: x=" + x + ", y=" + y + ", z=" + z);
+        // Visa accelerometerdata
+        TextView accelerometerData = findViewById(R.id.accelerometerData);
+        accelerometerData.setText(String.format(Locale.getDefault(), getString(R.string.acceleration_magnitude), x, y, z));
 
         // Beräkna accelerationsmängden
         float accelerationMagnitude = (float) Math.sqrt(x * x + y * y + z * z);
-        Log.d("SensorData", "Acceleration Magnitude: " + accelerationMagnitude);
+        Log.d("SensorData", String.format(Locale.getDefault(), "Acceleration Magnitude: %.2f", accelerationMagnitude));
 
         Button myButton = findViewById(R.id.myButton);
 
-        float shakeThreshold = 12.0f; // Sätt ett rimligt tröskelvärde
+        int shakeThreshold = getResources().getInteger(R.integer.shake_threshold);
         if (accelerationMagnitude > shakeThreshold) {
             long currentTime = System.currentTimeMillis();
             if (currentTime - lastShakeTime > 1000) {
@@ -98,7 +101,7 @@ public class MainActivity extends AppCompatActivity {
                     Log.d("Game", "Starting game!");
                     startGame();
                 } else {
-                    Log.d("Game", "Shake detected, increasing score");
+                    Log.d("Game", getString(R.string.shake_detected));
                     score++; // Öka poängen när en skakning upptäcks
                     updateScore(); // Uppdatera poängvisningen
                 }
@@ -113,19 +116,19 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-    private void updateScore() {
-        TextView scoreText = findViewById(R.id.scoreText);
-        String scoreString = getString(R.string.score_text, score);
-        scoreText.setText(scoreString);
-        Log.d("Game", "Current score: " + score);
-    }
-
-
     private void handleGyroscopeEvent(SensorEvent event) {
-        float rotationRate = event.values[2]; // Använd rotation runt z-axeln
+        float rotationX = event.values[0];
+        float rotationY = event.values[1];
+        float rotationZ = event.values[2];
+
+        // Visa gyroskopdata
+        TextView gyroscopeData = findViewById(R.id.gyroscopeData);
+        gyroscopeData.setText(String.format(Locale.getDefault(), "Gyroscope: x=%.2f, y=%.2f, z=%.2f", rotationX, rotationY, rotationZ));
+
+        // Hantera rotationen av en bild
         ImageView rotatingImage = findViewById(R.id.rotatingImage);
         float currentRotation = rotatingImage.getRotation();
-        rotatingImage.setRotation(currentRotation + rotationRate * 10);
+        rotatingImage.setRotation(currentRotation + rotationZ * 10);
     }
 
     private void handleLightSensorEvent(SensorEvent event) {
@@ -139,12 +142,17 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-    // Start the game when a shake is detected
+    private void updateScore() {
+        TextView scoreText = findViewById(R.id.scoreText);
+        scoreText.setText(String.format(Locale.getDefault(), getString(R.string.score_text), score));
+        Log.d("Game", "Current score: " + score);
+    }
+
     private void startGame() {
         gameStarted = true;
         score = 0; // Nollställ poängen när spelet startar
-        Toast.makeText(this, "Game started!", Toast.LENGTH_SHORT).show();
-        Log.d("Game", "Game started!");
+        Toast.makeText(this, getString(R.string.game_started), Toast.LENGTH_SHORT).show();
+        Log.d("Game", getString(R.string.game_started));
         updateScore(); // Visa poängen när spelet startar
     }
 

@@ -13,44 +13,57 @@
         android:layout_centerHorizontal="true"
         android:layout_marginTop="20dp" />
 
-    <!-- ProgressBar för att visa accelerometerdata -->
-    <ProgressBar
-        android:id="@+id/progressBar"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/instructionText"
-        android:layout_marginTop="20dp" />
-
-    <!-- Bild för att visa rotation med gyroskop -->
-    <ImageView
-        android:id="@+id/rotatingImage"
-        android:layout_width="100dp"
-        android:layout_height="100dp"
-        android:src="@drawable/ic_launcher_foreground"
-        android:layout_below="@id/progressBar"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="20dp"
-        android:contentDescription="@string/rotating_image_description" />
-
-    <!-- Button to change color based on accelerometer data -->
-    <Button
-        android:id="@+id/myButton"
+    <!-- Accelerometer data TextView -->
+    <TextView
+        android:id="@+id/accelerometerData"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/button_text"
-        android:layout_below="@id/rotatingImage"
+        android:text="Accelerometer: x=0.0, y=0.0, z=0.0"
+        android:textSize="16sp"
+        android:layout_below="@id/instructionText"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="20dp" />
 
-    <!-- TextView to display the score -->
+    <!-- Gyroscope data TextView -->
+    <TextView
+        android:id="@+id/gyroscopeData"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Gyroscope: x=0.0, y=0.0, z=0.0"
+        android:textSize="16sp"
+        android:layout_below="@id/accelerometerData"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="20dp" />
+
+    <!-- Score TextView -->
     <TextView
         android:id="@+id/scoreText"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Score: 0"
         android:textSize="18sp"
-        android:layout_below="@id/myButton"
+        android:layout_below="@id/gyroscopeData"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="20dp" />
+
+    <!-- Övriga komponenter som Button, ImageView, etc. -->
+    <Button
+        android:id="@+id/myButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/button_text"
+        android:layout_below="@id/scoreText"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="20dp" />
+
+    <ImageView
+        android:id="@+id/rotatingImage"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:src="@drawable/ic_launcher_foreground"
+        android:layout_below="@id/myButton"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="20dp"
+        android:contentDescription="@string/rotating_image_description" />
 
 </RelativeLayout>

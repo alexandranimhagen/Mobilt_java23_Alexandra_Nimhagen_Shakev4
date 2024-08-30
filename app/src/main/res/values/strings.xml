@@ -4,4 +4,10 @@
     <string name="button_text">Click Me</string>
     <string name="rotating_image_description">Rotating image</string>
     <string name="score_text">Score: %1$d</string>
+    <string name="game_started">Game started!</string>
+    <string name="shake_detected">Shake detected, increasing score</string>
+    <string name="acceleration_magnitude">Accelerometer: x=%.2f, y=%.2f, z=%.2f</string>
+    <string name="sensor_error_accelerometer">Accelerometer not available.</string>
+    <string name="sensor_error_gyroscope">Gyroscope not available.</string>
+    <string name="sensor_error_light">Light sensor not available.</string>
 </resources>
