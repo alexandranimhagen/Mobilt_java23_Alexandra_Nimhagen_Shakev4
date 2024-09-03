@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+<dimen name="padding">16dp</dimen>
+<dimen name="gameTitle_text_size">22sp</dimen>
+<dimen name="gameTitle_margin_top">30dp</dimen>
+<dimen name="instructionsHeader_text_size">18sp</dimen>
+<dimen name="instructionsHeader_margin_top">20dp</dimen>
+<dimen name="gameInstructions_text_size">16sp</dimen>
+<dimen name="gameInstructions_margin_top">10dp</dimen>
+<dimen name="rotatingImage_size">100dp</dimen>
+<dimen name="rotatingImage_margin_top">20dp</dimen>
+<dimen name="accelerometerHeader_text_size">16sp</dimen>
+<dimen name="accelerometerHeader_margin_top">20dp</dimen>
+<dimen name="axis_label_text_size">14sp</dimen>
+<dimen name="axis_label_margin_top">10dp</dimen>
+<dimen name="progressBar_margin_top">5dp</dimen>
+<dimen name="gyroscopeHeader_text_size">16sp</dimen>
+<dimen name="gyroscopeHeader_margin_top">20dp</dimen>
+<dimen name="scoreText_text_size">18sp</dimen>
+<dimen name="scoreText_margin_top">20dp</dimen>
+<dimen name="button_margin_top">20dp</dimen>
+</resources>

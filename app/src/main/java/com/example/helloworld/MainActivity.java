@@ -92,17 +92,14 @@ public class MainActivity extends AppCompatActivity {
 
         // Add Click Listener to Button to start or reset the game
         Button myButton = findViewById(R.id.myButton);
-        myButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (gameStarted) {
-                    gameStarted = false;
-                    score = 0; // Reset score
-                    updateScore();
-                    Toast.makeText(MainActivity.this, "Game reset!", Toast.LENGTH_SHORT).show();
-                } else {
-                    Toast.makeText(MainActivity.this, "Start the game by shaking!", Toast.LENGTH_SHORT).show();
-                }
+        myButton.setOnClickListener(v -> {
+            if (gameStarted) {
+                gameStarted = false;
+                score = 0; // Reset score
+                updateScore();
+                Toast.makeText(MainActivity.this, "Game reset!", Toast.LENGTH_SHORT).show();
+            } else {
+                Toast.makeText(MainActivity.this, "Start the game by shaking!", Toast.LENGTH_SHORT).show();
             }
         });
     }
